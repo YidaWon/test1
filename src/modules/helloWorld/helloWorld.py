@@ -2,14 +2,15 @@ from logs import logDecorator as lD
 import json, pprint
 
 config = json.load(open('../config/config.json'))
-logBase = config['logging']['logBase'] + '.modules.module1.module1'
+logBase = config['logging']['logBase'] + '.modules.helloWorld.helloWorld'
 
 
 @lD.log(logBase + '.doSomething')
 def doSomething(logger):
     '''print a line
     
-    This function simply prints a single line
+    This function asks the user for input. Then adds the sum of digits.
+    Repeat until only a single digit is left. Returns that digit.
     
     Parameters
     ----------
@@ -17,13 +18,21 @@ def doSomething(logger):
         The logger used for logging error information
     '''
 
-    print('We are in module 1')
+    x = input('Hello world. Please enter any integer and I will sum it: ')
+
+    while len(str(x)) > 1:
+        total = 0
+        for n in str(x):
+            total += int(n)
+        x = total
+
+    print('Hello world, your summed digit is', str(x)+'.')
 
     return
 
 @lD.log(logBase + '.main')
 def main(logger, resultsDict):
-    '''main function for module1
+    '''main function for helloWorld
     
     This function finishes all the tasks for the
     main function. This is a way in which a 
@@ -40,14 +49,12 @@ def main(logger, resultsDict):
     '''
 
     print('='*30)
-    print('Main function of module 1')
+    print('Main function of helloWorld')
     print('='*30)
-    # print('We get a copy of the result dictionary over here ...')
-    # pprint.pprint(resultsDict)
 
     doSomething()
 
-    print('Getting out of Module 1')
+    print('Getting out of helloWorld')
     print('-'*30)
 
     return
